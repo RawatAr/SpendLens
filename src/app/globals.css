@@ -1,0 +1,149 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Design System Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Backgrounds - Premium AI Finance Observatory Palette */
+  --bg-app: #F7F8F6; 
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-dark: #0B0F14;
+
+  /* Borders */
+  --border-default: #E2E8F0;
+  --border-soft: #F1F5F9;
+  --border-accent: rgba(16, 185, 129, 0.2);
+
+  /* Typography */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --text-accent: #10B981;
+
+  /* Accent */
+  --accent: #10B981;
+  --accent-hover: #059669;
+  --accent-glow: #34D399;
+}
+
+/* ── Base Styles ─────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  border-color: var(--border-default);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────── */
+.font-mono {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────────── */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* ── Shimmer Effect ──────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* ── Print Styles (Professional PDF Export) ─────────────────────────── */
+@media print {
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  /* Hide UI elements */
+  nav, footer, button, .print-hidden, form, [role="button"] {
+    display: none !important;
+  }
+
+  /* Show all content (no scroll/overflow) */
+  .overflow-hidden, .overflow-y-auto {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Professional Card Styling for Print */
+  .bg-white, .bg-slate-50, .bg-slate-950 {
+    background: white !important;
+    border: 1px solid #eee !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Intelligence Report / Dark Sections for Print */
+  .bg-slate-950, .bg-slate-900 {
+    background: #f8fafc !important;
+    border: 2px solid #10b981 !important;
+    padding: 20px !important;
+  }
+
+  h1, h2, h3, h4 {
+    color: black !important;
+    page-break-after: avoid;
+  }
+
+  p, span {
+    color: #334155 !important;
+  }
+
+  /* Hero Stats */
+  .text-7xl, .text-8xl, .text-9xl {
+    font-size: 32pt !important;
+    color: #10b981 !important;
+  }
+
+  /* Savings Colors */
+  .text-emerald-500, .text-emerald-400 {
+    color: #059669 !important;
+    font-weight: bold !important;
+  }
+
+  /* Ensure rows don't break across pages */
+  .grid, div > div {
+    page-break-inside: avoid;
+  }
+
+  /* Full width for print - ESCAPED Tailwind selectors */
+  .max-w-\[1440px\], .max-w-2xl, .max-w-\[1300px\] {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
