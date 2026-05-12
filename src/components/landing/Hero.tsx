@@ -5,7 +5,7 @@ import { HeroHeadline } from "./HeroHeadline";
 import { HeroOptimizationSimulator } from "./HeroOptimizationSimulator";
 import { BrandMarquee } from "./BrandMarquee";
 import { FloatingDoodle, OptimizationPath, InfrastructureSketch, FloatingMetricPill, GlowingNode } from "@/components/ui/advanced-doodles";
-import { Activity, Zap, Cpu, Database, Brain, CircuitBoard, Network, Code, Terminal, Bot, Sparkles, TrendingDown } from "lucide-react";
+import { Activity, Zap, Cpu, Database, Brain, CircuitBoard, Network, Code, Terminal, Bot, TrendingDown } from "lucide-react";
 
 export default function Hero() {
   return (

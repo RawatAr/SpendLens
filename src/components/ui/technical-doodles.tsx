@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowDownRight, ArrowUpRight, Zap, Activity, TrendingDown, Minus, Plus } from "lucide-react";
+import { ArrowRight, ArrowDownRight, ArrowUpRight, Zap, Minus } from "lucide-react";
 
 interface DoodleProps {
   type: "arrow" | "circle" | "line" | "annotation";

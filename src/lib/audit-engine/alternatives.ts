@@ -17,7 +17,7 @@ interface AlternativeResult {
 export function checkCheaperAlternative(
   input: ToolInput,
   useCase: UseCaseType,
-  teamSize: number
+  _teamSize: number
 ): AlternativeResult | null {
   // ── Cursor for non-coding teams ──────────────────────────────────────────────
   if (input.tool === "cursor" && input.plan !== "hobby") {

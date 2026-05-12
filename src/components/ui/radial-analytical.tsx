@@ -10,7 +10,7 @@ interface RadialAnalyticalProps {
   showIcon?: boolean;
 }
 
-export function RadialAnalytical({ confidence, label, size = "md", showIcon = true }: RadialAnalyticalProps) {
+export function RadialAnalytical({ confidence, label, size = "md" }: RadialAnalyticalProps) {
   const sizeMap = {
     sm: { diameter: 52, strokeWidth: 5, fontSize: "text-base" },
     md: { diameter: 80, strokeWidth: 8, fontSize: "text-xl" },
