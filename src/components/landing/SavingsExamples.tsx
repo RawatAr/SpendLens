@@ -119,7 +119,7 @@ export default function SavingsExamples() {
               </div>
 
               <p className="text-base leading-relaxed text-slate-700 mb-8 font-bold italic tracking-tight">
-                "{ex.story}"
+                &quot;{ex.story}&quot;
               </p>
 
               <div className="pt-6 border-t border-slate-100 flex items-center gap-3 text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em]">

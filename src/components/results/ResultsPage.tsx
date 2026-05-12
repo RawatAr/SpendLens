@@ -251,7 +251,7 @@ export default function ResultsPage() {
               </div>
 
               {/* Audit Logs */}
-              <IntelligenceLogs tools={auditResult.tools} />
+              <IntelligenceLogs key={JSON.stringify(auditResult.tools)} tools={auditResult.tools} />
             </div>
           </div>
         </div>

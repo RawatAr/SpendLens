@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Activity, Zap, TrendingDown, Globe, Code, Database, ArrowRight, ArrowDownRight, ArrowUpRight, Cpu, BarChart3, PieChart, LineChart } from "lucide-react";
 
@@ -221,31 +221,24 @@ interface AmbientParticleFieldProps {
 }
 
 export function AmbientParticleField({ count = 20, className = "" }: AmbientParticleFieldProps) {
-  const [particles, setParticles] = useState<Array<{
-    width: number;
-    height: number;
-    top: number;
-    left: number;
-    opacity: number;
-    yRange: number;
-    xRange: number;
-    duration: number;
-    delay: number;
-  }>>([]);
-
-  useEffect(() => {
-    const newParticles = [...Array(count)].map((_, i) => ({
-      width: Math.random() * 4 + 2,
-      height: Math.random() * 4 + 2,
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-      opacity: Math.random() * 0.3 + 0.1,
-      yRange: Math.random() * 30 + 10,
-      xRange: Math.random() * 20 - 10,
-      duration: Math.random() * 5 + 5,
-      delay: Math.random() * 3,
-    }));
-    setParticles(newParticles);
+  const particles = useMemo(() => {
+    return [...Array(count)].map((_, i) => {
+      // Deterministic values for React 19 purity
+      const seed = (i + 1) * 123.456;
+      const pseudoRandom = (s: number) => (Math.sin(s) + 1) / 2;
+      
+      return {
+        width: pseudoRandom(seed) * 4 + 2,
+        height: pseudoRandom(seed + 1) * 4 + 2,
+        top: pseudoRandom(seed + 2) * 100,
+        left: pseudoRandom(seed + 3) * 100,
+        opacity: pseudoRandom(seed + 4) * 0.3 + 0.1,
+        yRange: pseudoRandom(seed + 5) * 30 + 10,
+        xRange: pseudoRandom(seed + 6) * 20 - 10,
+        duration: pseudoRandom(seed + 7) * 5 + 5,
+        delay: pseudoRandom(seed + 8) * 3,
+      };
+    });
   }, [count]);
 
   return (

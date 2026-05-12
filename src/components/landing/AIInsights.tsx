@@ -85,7 +85,7 @@ export default function AIInsights() {
                   <div className="h-4 w-px bg-slate-800 mx-2" />
                   <div className="flex items-center gap-3">
                     <Bot size={20} className="text-emerald-400" />
-                    <div className="text-sm font-black text-white uppercase tracking-widest">spend_audit_summary.sh</div>
+                    <p className="text-xs font-bold text-emerald-400/60 uppercase tracking-widest">spend_audit_summary.sh</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -109,7 +109,7 @@ export default function AIInsights() {
                 <Quote size={80} className="absolute -top-10 -left-10 text-slate-50" />
                 <div className="pl-6">
                   <p className="text-2xl sm:text-3xl leading-tight text-slate-800 font-black italic tracking-tight">
-                    "{displayedText}"
+                    &quot;{displayedText}&quot;
                     {isTyping && (
                       <motion.span
                         animate={{ opacity: [0, 1, 0] }}

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 interface AdvancedBackgroundProps {
   variant?: "hero" | "audit" | "insights" | "cta" | "default";
@@ -176,26 +176,21 @@ export function AdvancedBackground({ variant = "default", children }: AdvancedBa
 }
 
 export function FloatingParticles({ count = 20 }: { count?: number }) {
-  const [particles, setParticles] = useState<Array<{
-    id: number;
-    x: number;
-    y: number;
-    size: number;
-    duration: number;
-    delay: number;
-  }>>([]);
-
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: count }, (_, i) => ({
+  const particles = useMemo(() => {
+    return Array.from({ length: count }, (_, i) => {
+      // Deterministic values for React 19 purity
+      const seed = (i + 1) * 789.012;
+      const pseudoRandom = (s: number) => (Math.sin(s) + 1) / 2;
+      
+      return {
         id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 4 + 2,
-        duration: Math.random() * 10 + 10,
-        delay: Math.random() * 5,
-      }))
-    );
+        x: pseudoRandom(seed) * 100,
+        y: pseudoRandom(seed + 1) * 100,
+        size: pseudoRandom(seed + 2) * 4 + 2,
+        duration: pseudoRandom(seed + 3) * 10 + 10,
+        delay: pseudoRandom(seed + 4) * 5,
+      };
+    });
   }, [count]);
 
   return (

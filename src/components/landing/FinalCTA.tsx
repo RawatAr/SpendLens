@@ -50,7 +50,7 @@ export default function FinalCTA() {
             transition={{ delay: 0.2 }}
             className="text-xl sm:text-2xl mb-16 max-w-3xl mx-auto text-slate-700 font-black leading-tight uppercase tracking-tight"
           >
-            Find out in 2 minutes what you're overpaying. No sign-up. No credit
+            Find out in 2 minutes what you&apos;re overpaying. No sign-up. No credit
             card. Just enter your tools and get a defensible audit with real
             numbers.
           </motion.p>

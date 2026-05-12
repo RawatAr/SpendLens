@@ -25,10 +25,6 @@ export function IntelligenceLogs({ tools }: IntelligenceLogsProps) {
   const [isStreaming, setIsStreaming] = useState(true);
 
   useEffect(() => {
-    // Reset logs when tools change to feel "live"
-    setLogs([]);
-    setIsStreaming(true);
-
     const dynamicLogs: LogEntry[] = [];
     let logId = 1;
     const now = new Date();
