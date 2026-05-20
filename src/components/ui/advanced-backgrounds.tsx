@@ -177,6 +177,7 @@ export function AdvancedBackground({ variant = "default", children }: AdvancedBa
 
 export function FloatingParticles({ count = 20 }: { count?: number }) {
   const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   const particles = useMemo(() => {
