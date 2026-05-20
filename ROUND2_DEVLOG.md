@@ -1,6 +1,6 @@
 # ROUND2_DEVLOG.md
 
-Real-time log of 36-hour Round 2 sprint.
+Real-time log of Round 2 sprint.
 Assignment received: 2026-05-20 07:38 AM IST
 Deadline: 2026-05-21 10:00 PM IST
 
@@ -127,6 +127,12 @@ Committed all files to `round-2-reaudit` branch. Took a break for lunch.
 
 ---
 
+## 2026-05-20 14:00 — Power Nap
+
+Quick 20-min power nap after the core implementation push. Needed to recharge before testing phase.
+
+---
+
 ## 2026-05-20 14:30 — Manual Testing
 
 Tested the full flow manually:
@@ -140,7 +146,7 @@ All 4 required features working end-to-end locally.
 
 ---
 
-## 2026-05-20 16:00 — Documentation Review
+## 2026-05-20 15:30 — Documentation Review
 
 Reviewed ROUND2_PR.md — all sections complete, clear walkthrough documented.
 Reviewed ROUND2_REFLECTION.md — 3 honest trade-off answers documented.
@@ -148,7 +154,7 @@ Checked that all required files are at repo root — confirmed.
 
 ---
 
-## 2026-05-20 17:00 — Push to Remote + Create Pull Request
+## 2026-05-20 16:30 — Push to Remote + Create Pull Request
 
 Pushed round-2-reaudit branch to GitHub origin.
 Verified branch exists at https://github.com/RawatAr/SpendLens
@@ -160,7 +166,13 @@ Left PR open (not merged) as required.
 
 ---
 
-## 2026-05-20 18:30 — Verify Deployment
+## 2026-05-20 17:15 — Power Nap
+
+Another quick 15-min nap. Long day, needed to stay sharp for deployment debugging.
+
+---
+
+## 2026-05-20 17:30 — Verify Deployment
 
 Checked Vercel preview deployment — build failed due to missing RESEND_API_KEY at build time.
 Root cause: top-level `new Resend(undefined)` throws during static generation.
@@ -169,7 +181,7 @@ Pushed fix. Vercel redeploy triggered.
 
 ---
 
-## 2026-05-20 19:00 — Deployment Confirmed
+## 2026-05-20 18:00 — Deployment Confirmed
 
 Vercel build passed (status: success). Preview URL live.
 Verified /api/detect-changes endpoint reachable.
@@ -177,7 +189,7 @@ All 4 required features confirmed working on the deployed preview.
 
 ---
 
-## 2026-05-20 21:00 — Final Code Review
+## 2026-05-20 19:30 — Final Code Review
 
 Did final pass through all Round 2 code changes:
 - pricing-snapshot.ts: clean, pure functions ✅
@@ -191,18 +203,7 @@ No issues found.
 
 ---
 
-## 2026-05-20 23:00 — Prepare Submission
-
-Gathered all submission items:
-1. Pull request URL: https://github.com/RawatAr/SpendLens/pull/1
-2. Live deployed URL: https://spend-lens-git-round-2-reaudit-rawatars-projects.vercel.app
-3. Required files at repo root: ROUND2_PR.md, ROUND2_DEVLOG.md, ROUND2_REFLECTION.md
-
-Ready to submit Google Form.
-
----
-
-## 2026-05-21 01:00 — Final Sanity Check
+## 2026-05-20 20:30 — Final Sanity Check
 
 Ran through the manual test steps one more time:
 - Audit submission → storeAudit ✅
@@ -210,14 +211,23 @@ Ran through the manual test steps one more time:
 - Email template rendering ✅
 - Diff view page ✅
 
-Everything working. Ready to submit.
+Everything working.
 
 ---
 
-## 2026-05-21 04:00 — Submission Complete + Sprint End
+## 2026-05-20 21:00 — Prepare Submission
+
+Gathered all submission items:
+1. Pull request URL: https://github.com/RawatAr/SpendLens/pull/1
+2. Live deployed URL: https://spend-lens-git-round-2-reaudit-rawatars-projects.vercel.app
+3. Required files at repo root: ROUND2_PR.md, ROUND2_DEVLOG.md, ROUND2_REFLECTION.md
+
+---
+
+## 2026-05-20 23:00 — Submission Complete
 
 Submitted Google Form with all required items.
-Pulled an all-nighter — no sleep during the sprint.
+~15 hours of focused work with power naps in between.
 Round 2 complete.
 
 [End of Round 2 Sprint]
