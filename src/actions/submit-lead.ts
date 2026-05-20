@@ -15,7 +15,7 @@ import type { SavingsTier } from "@/types/audit";
 import { Resend } from "resend";
 import { headers } from "next/headers";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key_for_build");
 
 interface SubmitLeadInput {
   email: string;

@@ -12,7 +12,7 @@ import { Resend } from "resend";
 import { createHmac } from "crypto";
 import type { AffectedAudit } from "@/lib/detect-changes";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key_for_build");
 
 function getUnsubscribeToken(auditId: string, email: string): string {
   const secret = process.env.CRON_SECRET ?? "spendlens-dev-secret";
