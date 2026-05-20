@@ -176,6 +176,9 @@ export function AdvancedBackground({ variant = "default", children }: AdvancedBa
 }
 
 export function FloatingParticles({ count = 20 }: { count?: number }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const particles = useMemo(() => {
     return Array.from({ length: count }, (_, i) => {
       // Deterministic values for React 19 purity
@@ -192,6 +195,8 @@ export function FloatingParticles({ count = 20 }: { count?: number }) {
       };
     });
   }, [count]);
+
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
