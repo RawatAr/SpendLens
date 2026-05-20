@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useAuditStore } from "@/store/audit-store";
 import { saveAudit } from "@/actions/save-audit";
 import { submitLead } from "@/actions/submit-lead";
+import { storeAudit } from "@/actions/store-audit"; // Round 2: persist audit for re-audit
 import { ResultsHero } from "./ResultsHero";
 import { ToolAuditCard } from "./ToolAuditCard";
 import { AuditTimeline } from "./AuditTimeline";
@@ -21,7 +22,7 @@ import { generateFallbackSummary } from "@/lib/fallback-summary";
 
 export default function ResultsPage() {
   const router = useRouter();
-  const { auditResult, auditId, setAuditId } = useAuditStore();
+  const { auditResult, auditId, setAuditId, formState } = useAuditStore();
   const { formatValue } = useCurrency();
   const [aiSummary, setAiSummary] = useState<string | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(true);
@@ -85,8 +86,22 @@ export default function ResultsPage() {
       savingsTier: auditResult.savingsTier,
     });
     setLeadSubmitting(false);
-    if (result.success) { setLeadDone(true); toast.success("✓ Check your inbox!"); }
-    else toast.error(result.error ?? "Something went wrong");
+    if (result.success) {
+      setLeadDone(true);
+      toast.success("✓ Check your inbox!");
+      // Round 2: persist audit snapshot for pricing-change re-audit notifications
+      const currentAuditId = savedId ?? auditId;
+      if (currentAuditId && auditResult && formState) {
+        storeAudit({
+          auditId: currentAuditId,
+          userEmail: email,
+          inputStack: formState,
+          outputResult: auditResult,
+        }).catch((err) => console.warn("[storeAudit] Non-fatal:", err));
+      }
+    } else {
+      toast.error(result.error ?? "Something went wrong");
+    }
   };
 
   return (

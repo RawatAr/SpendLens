@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { audits } from "@/db/schema";
+import { audits, storedAudits } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -64,8 +64,16 @@ export default async function SharePage({ params }: PageProps) {
   const { id } = await params;
 
   let audit;
+  let isFlagged = false;
   try {
     [audit] = await db.select().from(audits).where(eq(audits.id, id)).limit(1);
+    // Round 2: check if this audit has been flagged due to pricing changes
+    const [storedAudit] = await db
+      .select({ flaggedForReaudit: storedAudits.flaggedForReaudit })
+      .from(storedAudits)
+      .where(eq(storedAudits.id, id))
+      .limit(1);
+    isFlagged = storedAudit?.flaggedForReaudit ?? false;
   } catch {
     // DB not configured — show a fallback
     return (
@@ -104,9 +112,26 @@ export default async function SharePage({ params }: PageProps) {
 
       <div className="max-w-[720px] mx-auto px-6 py-12">
         {/* Banner */}
-        <div className="text-xs mb-8 px-3 py-2 rounded-[6px] text-center" style={{ background: "#111111", border: "1px solid #262626", color: "#71717A" }}>
+        <div className="text-xs mb-4 px-3 py-2 rounded-[6px] text-center" style={{ background: "#111111", border: "1px solid #262626", color: "#71717A" }}>
           This is a shared audit result. Personal details have been removed.
         </div>
+
+        {/* Stale audit banner — shown when pricing has changed since this audit was run */}
+        {isFlagged && (
+          <div
+            className="text-xs mb-6 px-4 py-3 rounded-[8px] flex items-center justify-between gap-4"
+            style={{ background: "rgb(245 158 11 / 0.08)", border: "1px solid rgb(245 158 11 / 0.3)", color: "#F59E0B" }}
+          >
+            <span>⚡ Pricing has changed since this audit was run. Recommendations may be outdated.</span>
+            <Link
+              href={`/audit/diff/${id}`}
+              className="shrink-0 font-semibold underline"
+              style={{ color: "#F59E0B" }}
+            >
+              See updated audit →
+            </Link>
+          </div>
+        )}
 
         {/* Hero */}
         <div className="p-8 rounded-[16px] mb-6" style={{ background: "#111111", border: "1px solid #262626" }}>
