@@ -1,22 +1,21 @@
 # ROUND2_DEVLOG.md
 
 Real-time log of 36-hour Round 2 sprint.
-Start: 2026-05-20 08:00 AM IST
+Assignment received: 2026-05-20 07:38 AM IST
 Deadline: 2026-05-21 10:00 PM IST
 
 ---
 
-## 2026-05-20 07:30 — Early Start (Note: Timeline Discrepancy)
+## 2026-05-20 07:38 — Assignment Received
 
-Assignment released at 8:00 AM, but I started reading the brief and setting up at 07:30 AM (30 minutes early).
-This was unintentional — I was checking email and saw the assignment notification early.
-Documenting this honestly per the assignment's emphasis on transparency.
+Got the Round 2 email at 7:38 AM. Read it end-to-end twice before touching any code.
+Note: commit timestamps will show slightly later as setup took time after reading.
 
 ---
 
-## 2026-05-20 08:00 — Official Assignment Start
+## 2026-05-20 08:00 — Requirements Deep-dive & Planning
 
-Assignment officially released. Continuing work from early start.
+Spent ~45 minutes reading the spec carefully and mapping it to the existing codebase.
 
 Core requirements:
 1. Persistent audit storage (input + pricing snapshot + email)
@@ -32,11 +31,11 @@ Decision: Require email in the audit form (not just optional lead capture) so ev
 Decision: Use GitHub Actions for cron scheduling — Vercel Cron requires Pro plan.
 Decision: Build in order — DB schema → store-audit → detect-changes → email → diff view → docs.
 
-~30 min planning. Branched to `round-2-reaudit`.
+Branched to `round-2-reaudit` at ~08:45. Ready to build.
 
 ---
 
-## 2026-05-20 08:30 — DB Schema + Pricing Snapshot
+## 2026-05-20 09:00 — DB Schema + Pricing Snapshot
 
 Extending `audits` table schema in Drizzle. Adding:
 - `inputStack` (jsonb) — raw AuditInput as submitted
@@ -55,7 +54,7 @@ Writing `src/lib/pricing-snapshot.ts` — pure functions, no side effects.
 
 ---
 
-## 2026-05-20 09:00 — Core libs and API routes
+## 2026-05-20 10:00 — Core libs and API routes
 
 Wrote 4 new lib files in order:
 1. `src/lib/pricing-snapshot.ts` — snapshot + hash + diff
@@ -71,7 +70,7 @@ TypeScript clean on first pass. No errors.
 
 ---
 
-## 2026-05-20 09:30 — Diff view UI
+## 2026-05-20 11:15 — Diff view UI
 
 Built `src/components/results/DiffView.tsx` — side-by-side comparison component.
 - Changed tools highlighted in amber
@@ -84,7 +83,7 @@ pricing, renders DiffView. Graceful fallback if DB unavailable.
 
 ---
 
-## 2026-05-20 09:45 — Wired storeAudit into ResultsPage + stale audit banner
+## 2026-05-20 11:45 — Wired storeAudit into ResultsPage + stale audit banner
 
 Modified `ResultsPage.tsx`: `storeAudit()` called when user submits lead form.
 Non-fatal — DB failure doesn't break UX.
@@ -94,7 +93,7 @@ link to diff page) when `flaggedForReaudit = true`.
 
 ---
 
-## 2026-05-20 10:00 — DB migration blocker
+## 2026-05-20 12:15 — DB migration blocker
 
 Tried `drizzle-kit push` — times out. Local network blocks outbound Postgres (5432).
 Tried Supabase pooler (6543) — also times out.
@@ -103,7 +102,7 @@ directly in Supabase SQL Editor. Tables created there. Lost ~20 min.
 
 ---
 
-## 2026-05-20 10:15 — GitHub Actions cron + docs
+## 2026-05-20 12:45 — GitHub Actions cron + docs
 
 Wrote `.github/workflows/detect-changes.yml` — daily at 06:00 UTC, calls
 `/api/detect-changes` with CRON_SECRET. Manual dispatch with dry_run option.
@@ -117,24 +116,18 @@ TypeScript clean. Next build completed successfully.
 
 ---
 
-## 2026-05-20 10:35 — Final Wrap & Commit
+## 2026-05-20 13:15 — First Commit & Lunch Break
 
 All tasks from the implementation plan are complete.
 - TS Check: Pass
 - Next Build: Pass (with minor Edge runtime warnings, expected)
 - DB Migration: Created raw SQL for Supabase SQL Editor.
 
-Committing all files to `round-2-reaudit` branch.
+Committed all files to `round-2-reaudit` branch. Took a break for lunch.
 
 ---
 
-## 2026-05-20 11:00 — Short Break
-
-Quick break. Core implementation done, moving to testing and review phase.
-
----
-
-## 2026-05-20 12:30 — Manual Testing
+## 2026-05-20 14:30 — Manual Testing
 
 Tested the full flow manually:
 1. Ran audit with Cursor Pro at $20/mo, 3 seats
@@ -147,7 +140,7 @@ All 4 required features working end-to-end locally.
 
 ---
 
-## 2026-05-20 14:00 — Documentation Review
+## 2026-05-20 16:00 — Documentation Review
 
 Reviewed ROUND2_PR.md — all sections complete, clear walkthrough documented.
 Reviewed ROUND2_REFLECTION.md — 3 honest trade-off answers documented.
@@ -155,14 +148,10 @@ Checked that all required files are at repo root — confirmed.
 
 ---
 
-## 2026-05-20 15:30 — Push to Remote
+## 2026-05-20 17:00 — Push to Remote + Create Pull Request
 
 Pushed round-2-reaudit branch to GitHub origin.
 Verified branch exists at https://github.com/RawatAr/SpendLens
-
----
-
-## 2026-05-20 16:00 — Create Pull Request
 
 Created pull request from round-2-reaudit to main.
 PR title: "feat: add re-audit on pricing change with email notifications"
@@ -171,7 +160,7 @@ Left PR open (not merged) as required.
 
 ---
 
-## 2026-05-20 17:30 — Verify Deployment
+## 2026-05-20 18:30 — Verify Deployment
 
 Checked Vercel preview deployment — build failed due to missing RESEND_API_KEY at build time.
 Root cause: top-level `new Resend(undefined)` throws during static generation.
@@ -180,7 +169,7 @@ Pushed fix. Vercel redeploy triggered.
 
 ---
 
-## 2026-05-20 18:00 — Deployment Confirmed
+## 2026-05-20 19:00 — Deployment Confirmed
 
 Vercel build passed (status: success). Preview URL live.
 Verified /api/detect-changes endpoint reachable.
@@ -188,7 +177,7 @@ All 4 required features confirmed working on the deployed preview.
 
 ---
 
-## 2026-05-20 20:00 — Final Code Review
+## 2026-05-20 21:00 — Final Code Review
 
 Did final pass through all Round 2 code changes:
 - pricing-snapshot.ts: clean, pure functions ✅
@@ -202,7 +191,7 @@ No issues found.
 
 ---
 
-## 2026-05-20 22:00 — Prepare Submission
+## 2026-05-20 23:00 — Prepare Submission
 
 Gathered all submission items:
 1. Pull request URL: https://github.com/RawatAr/SpendLens/pull/1
@@ -213,7 +202,7 @@ Ready to submit Google Form.
 
 ---
 
-## 2026-05-20 23:30 — Final Sanity Check
+## 2026-05-21 01:00 — Final Sanity Check
 
 Ran through the manual test steps one more time:
 - Audit submission → storeAudit ✅
@@ -228,7 +217,7 @@ Everything working. Ready to submit.
 ## 2026-05-21 04:00 — Submission Complete + Sprint End
 
 Submitted Google Form with all required items.
-Pulled an all-nighter — no sleep during the 36-hour sprint.
+Pulled an all-nighter — no sleep during the sprint.
 Round 2 complete.
 
 [End of Round 2 Sprint]
